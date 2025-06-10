@@ -6,6 +6,8 @@ public class EntityFollow : MonoBehaviour
     public Vector2 deadZoneSize = new(1f, 1f);
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
+    public float minX = -10f;
+    public float maxX = 10f;
 
     private Camera mainCamera;
     private Transform target;
@@ -44,6 +46,10 @@ public class EntityFollow : MonoBehaviour
         {
             targetPosition += offset;
             targetPosition.z = transform.position.z; // Maintain camera's Z position
+
+            // Clamp X within min and max limits
+            targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
+
             Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
             transform.position = smoothedPosition;
         }
