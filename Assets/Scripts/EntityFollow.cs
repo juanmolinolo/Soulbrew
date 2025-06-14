@@ -3,7 +3,7 @@ using UnityEngine;
 public class EntityFollow : MonoBehaviour
 {
     public GameObject entity;
-    public Vector2 deadZoneSize = new(1f, 1f);
+    public float deadZoneSize = 1f;
     public float smoothSpeed = 0.125f;
     public Vector3 offset;
     public float minX = -10f;
@@ -23,8 +23,8 @@ public class EntityFollow : MonoBehaviour
         if (target == null || mainCamera == null) return;
 
         // Calculate the dead zone boundaries for X-axis only
-        float deadZoneMinX = transform.position.x - deadZoneSize.x / 2f;
-        float deadZoneMaxX = transform.position.x + deadZoneSize.x / 2f;
+        float deadZoneMinX = transform.position.x - deadZoneSize / 2f;
+        float deadZoneMaxX = transform.position.x + deadZoneSize / 2f;
 
         // Check if the target is outside the horizontal dead zone
         Vector3 targetPosition = transform.position;
@@ -32,12 +32,12 @@ public class EntityFollow : MonoBehaviour
 
         if (target.position.x < deadZoneMinX)
         {
-            targetPosition.x = target.position.x + deadZoneSize.x / 2f;
+            targetPosition.x = target.position.x + deadZoneSize / 2f;
             shouldMove = true;
         }
         else if (target.position.x > deadZoneMaxX)
         {
-            targetPosition.x = target.position.x - deadZoneSize.x / 2f;
+            targetPosition.x = target.position.x - deadZoneSize / 2f;
             shouldMove = true;
         }
 
