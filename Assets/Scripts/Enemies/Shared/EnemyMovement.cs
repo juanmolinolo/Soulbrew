@@ -1,4 +1,6 @@
+using Assets.Scripts.Constants;
 using Assets.Scripts.Enums;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NewMonoBehaviourScript : MonoBehaviour
@@ -6,65 +8,80 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
-    private float movementSpeed = 5f;
+    [SerializeField]
+    private List<GameObject> patrolPoints;
 
-    private Direction moveDirection = Direction.Idle;
-    private Direction lastDirectionPressed;
+    private bool isMoving = false;
+    private int currentPatrolIndex = 0;
+    private Vector2 targetPosition;
+
+    private void Start()
+    {
+        if (patrolPoints != null && patrolPoints.Count > 0)
+        {
+            targetPosition = patrolPoints[0].transform.position;
+        }
+    }
 
     void Update()
     {
-        SetLastDirectionPressed();
+        Vector2 currentPosition = transform.position;
+        float distanceToTarget = Vector2.Distance(currentPosition, targetPosition);
 
-        bool leftCurrentlyPressed = Input.GetKey(KeyCode.G);
-        bool rightCurrentlyPressed = Input.GetKey(KeyCode.H);
+        if (distanceToTarget < EnemyConstants.PATROL_MARGIN)
+        {
+            CyclePatrol();
+        }
 
-        if (leftCurrentlyPressed && !rightCurrentlyPressed)
+        if (currentPosition.x < targetPosition.x)
         {
-            MovePlayer(Direction.Left);
+            MoveEntity(Direction.Right);
         }
-        else if (rightCurrentlyPressed && !leftCurrentlyPressed)
+        else if (currentPosition.x > targetPosition.x)
         {
-            MovePlayer(Direction.Right);
-        }
-        else if (rightCurrentlyPressed && leftCurrentlyPressed)
-        {
-            MovePlayer(lastDirectionPressed);
+            MoveEntity(Direction.Left);
         }
         else
         {
-            moveDirection = Direction.Idle;
+            isMoving = false;
         }
 
-        animator.SetInteger("MoveDirection", (int)moveDirection);
-
+        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, isMoving);
     }
 
-    private void SetLastDirectionPressed()
+    private void CyclePatrol()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            lastDirectionPressed = Direction.Left;
-        }
-        else if (Input.GetKeyDown(KeyCode.H))
-        {
-            lastDirectionPressed = Direction.Right;
-        }
+        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
+        targetPosition = patrolPoints[currentPatrolIndex].transform.position;
     }
 
-    private void MovePlayer(Direction direction)
+    private void MoveEntity(Direction direction)
     {
         Vector2 currentPosition = transform.position;
 
         if (direction == Direction.Left)
         {
-            currentPosition.x -= movementSpeed * Time.deltaTime;
+            if (transform.localScale.x > 0)
+            {
+                TurnAround();
+            }
+            currentPosition.x -= EnemyConstants.ENEMY_SPEED * Time.deltaTime;
         }
         else if (direction == Direction.Right)
         {
-            currentPosition.x += movementSpeed * Time.deltaTime;
+            if (transform.localScale.x < 0)
+            {
+                TurnAround();
+            }
+            currentPosition.x += EnemyConstants.ENEMY_SPEED * Time.deltaTime;
         }
 
         transform.position = currentPosition;
-        moveDirection = direction;
+        isMoving = true;
+    }
+
+    private void TurnAround()
+    {
+        transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
 }

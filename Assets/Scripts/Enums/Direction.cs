@@ -4,6 +4,5 @@
     {
         Left = -1,
         Right = 1,
-        Idle = 0
     }
 }
