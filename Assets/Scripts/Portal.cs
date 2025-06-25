@@ -1,18 +1,25 @@
 using Assets.Scripts.Constants;
+using Assets.Scripts.Enums;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Portal : MonoBehaviour
 {
-    public GameObject fadeImage;
-    public float fadeDuration = 1.0f;
+    [SerializeField]
+    private GameObject fadeImage;
+
+    [SerializeField]
+    private float fadeDuration = 1.0f;
+
+    [SerializeField]
+    private SceneBuildIndex sceneToLoad;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag(TagConstants.PLAYER))
         {
-            Debug.Log("Player has entered the portal.");
             Fade(collision.gameObject);
         }
     }
@@ -47,5 +54,6 @@ public class Portal : MonoBehaviour
 
         playerColor.a = 0f;
         spriteRenderer.color = playerColor;
+        SceneManager.LoadScene((int)sceneToLoad);
     }
 }
