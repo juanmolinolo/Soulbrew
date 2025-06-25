@@ -18,7 +18,7 @@ public class AttackZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player)
+        if (collision.gameObject == player && !enemyMovement.isPerformingMovementBlockingAction)
         {
             if (Time.time - lastAttackTime > EnemyConstants.ATTACK_COOLDOWN)
             {

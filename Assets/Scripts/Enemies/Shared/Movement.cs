@@ -18,7 +18,7 @@ public class Movement : MonoBehaviour
 
     #endregion Parameters
 
-    private bool isPerformingMovementBlockingAction = false;
+    public bool isPerformingMovementBlockingAction = false;
     private bool shouldMove = true;
     private bool isChasing = false;
 

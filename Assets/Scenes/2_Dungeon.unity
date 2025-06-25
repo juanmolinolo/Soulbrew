@@ -9311,7 +9311,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.25
+  m_Radius: 0.5
 --- !u!114 &911338645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19138,6 +19138,7 @@ MonoBehaviour:
   - {fileID: 1148147173}
   - {fileID: 53128754}
   player: {fileID: 1534764946}
+  isPerformingMovementBlockingAction: 0
 --- !u!50 &1935666593
 Rigidbody2D:
   serializedVersion: 5
