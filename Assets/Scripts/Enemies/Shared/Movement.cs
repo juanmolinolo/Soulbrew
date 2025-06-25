@@ -3,7 +3,7 @@ using Assets.Scripts.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     #region Parameters
 
@@ -14,30 +14,16 @@ public class Enemy : MonoBehaviour
     private List<GameObject> patrolPoints;
 
     [SerializeField]
-    private CircleCollider2D attackRangeCollider;
-
-    [SerializeField]
     private GameObject player;
 
     #endregion Parameters
 
-    #region Attack 
-
-    private float lastAttackTime = 0f;
-    private bool isAttacking = false;
-    private bool isInAttackZone = false;
-
-    #endregion Attack
-
-    #region Chase/Patrol
-
+    private bool isPerformingMovementBlockingAction = false;
     private bool shouldMove = true;
     private bool isChasing = false;
 
     private int currentPatrolIndex = 0;
     private Vector2 targetPosition;
-
-    #endregion Chase/Patrol
 
     private void Start()
     {
@@ -50,10 +36,11 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if (!isAttacking)
+        if (!isPerformingMovementBlockingAction)
         {
             if (shouldMove)
             {
+                animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, true);
                 if (isChasing)
                 {
                     Chase();
@@ -66,50 +53,28 @@ public class Enemy : MonoBehaviour
 
             isChasing = ShouldChase();
         }
+        else
+        {
+            animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, false);
+        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void PerformMovementBlockingAction(float actionDuration, string animationTrigger = null)
     {
-        if (collision.gameObject == player)
+        if (!isPerformingMovementBlockingAction)
         {
-            if (Time.time - lastAttackTime > EnemyConstants.ATTACK_COOLDOWN)
+            isPerformingMovementBlockingAction = true;
+            if (animationTrigger != null)
             {
-                isAttacking = true;
-                isInAttackZone = true;
-                animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, false);
-                PerformAttack();
-                lastAttackTime = Time.time;
+                animator.SetTrigger(animationTrigger);
             }
+            Invoke(nameof(EndMovementBlockingAction), actionDuration);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void EndMovementBlockingAction()
     {
-        if (collision.gameObject == player)
-        {
-            isInAttackZone = false;
-        }
-    }
-
-    private void PerformAttack()
-    {
-        animator.SetTrigger("Attack1");
-        Invoke(nameof(CheckPlayerInAttackRange), 0.5f);
-        Invoke(nameof(EndAttack), 1f);
-    }
-
-    private void CheckPlayerInAttackRange()
-    {
-        if (isInAttackZone)
-        {
-            player.GetComponent<HeroKnight>().TakeDamage();
-        }
-    }
-
-    private void EndAttack()
-    {
-        isAttacking = false;
-        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, true);
+        isPerformingMovementBlockingAction = false;
     }
 
     private void Chase()

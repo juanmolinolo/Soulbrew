@@ -8,5 +8,6 @@
         public const float ATTACK_COOLDOWN = 2f;
         public const float WALKING_COOLDOWN = 0.5f;
         public const float ATTACK_RANGE_RADIUS_MARGIN = 0.1f;
+        public const float ATTACK_DURATION = 1f;
     }
 }
