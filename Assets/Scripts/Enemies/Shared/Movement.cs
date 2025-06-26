@@ -29,7 +29,7 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, true);
+        animator.SetBool(EnemyConstants.IS_MOVING_PARAMETER, true);
         if (isWhithinChaseDistance)
         {
             Chase();
@@ -96,7 +96,7 @@ public class Movement : MonoBehaviour
             {
                 TurnAround();
             }
-            currentPosition.x -= EnemyConstants.ENEMY_SPEED * Time.deltaTime;
+            currentPosition.x -= EnemyConstants.MOVEMENT_SPEED * Time.deltaTime;
         }
         else if (direction == Direction.Right)
         {
@@ -104,7 +104,7 @@ public class Movement : MonoBehaviour
             {
                 TurnAround();
             }
-            currentPosition.x += EnemyConstants.ENEMY_SPEED * Time.deltaTime;
+            currentPosition.x += EnemyConstants.MOVEMENT_SPEED * Time.deltaTime;
         }
 
         transform.position = currentPosition;

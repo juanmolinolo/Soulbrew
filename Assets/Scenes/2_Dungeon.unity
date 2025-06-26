@@ -2804,6 +2804,7 @@ MonoBehaviour:
   enemyMovement: {fileID: 1935666592}
   enemyAttackZone: {fileID: 1079606123}
   animator: {fileID: 1935666589}
+  health: 3
 --- !u!1 &256856864
 GameObject:
   m_ObjectHideFlags: 0
@@ -11406,9 +11407,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1534764946}
   enemyMovement: {fileID: 1935666592}
-  attackTriggerOptions:
+  attackTriggers:
   - Attack1
   - Attack2
+  attackDurations:
+  - 0.667
+  - 0.667
+  attackCooldown: 2
   animator: {fileID: 1935666589}
 --- !u!1 &1091469515
 GameObject:

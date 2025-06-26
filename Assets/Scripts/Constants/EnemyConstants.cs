@@ -2,12 +2,28 @@
 {
     public static class EnemyConstants
     {
-        public const float ENEMY_SPEED = 2.5f;
+        #region Velocity
+
+        public const float MOVEMENT_SPEED = 2.5f;
+
+        #endregion Velocity
+
+        #region Distance
+
         public const float PATROL_MARGIN = 1f;
         public const float CHASE_DISTANCE = 5f;
-        public const float ATTACK_COOLDOWN = 2f;
-        public const float WALKING_COOLDOWN = 0.5f;
-        public const float ATTACK_RANGE_RADIUS_MARGIN = 0.1f;
-        public const float ATTACK_DURATION = 0.667f;
+
+        #endregion Distance
+
+        #region Animations
+
+        public const string IS_MOVING_PARAMETER = "IsMoving";
+        public const string IS_DEAD_PARAMETER = "IsDead";
+
+        public const string ATTACK1_TRIGGER = "Attack1";
+        public const string ATTACK2_TRIGGER = "Attack2";
+        public const string TAKE_HIT_TRIGGER = "TakeHit";
+
+        #endregion Animations
     }
 }

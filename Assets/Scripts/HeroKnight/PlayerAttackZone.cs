@@ -27,7 +27,7 @@ namespace Assets.Scripts.HeroKnight
         {
             for (int i = 0; i < enemyHitBoxesOnAttackZone.Count; i++)
             {
-                enemyHitBoxesOnAttackZone[i].TakeDamage();
+                enemyHitBoxesOnAttackZone[i].TakeDamage(1);
             }
         }
     }

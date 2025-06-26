@@ -12,12 +12,13 @@ public class HitBox : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
-    private int health = 2;
+    [SerializeField]
+    private int health;
 
-    public void TakeDamage()
+    public void TakeDamage(int amount)
     {
-        animator.SetTrigger(AnimationConstants.TAKE_HIT_TRIGGER);
-        health--;
+        animator.SetTrigger(EnemyConstants.TAKE_HIT_TRIGGER);
+        health -= amount;
         if (health <= 0)
         {
             Die();
@@ -26,7 +27,7 @@ public class HitBox : MonoBehaviour
 
     private void Die()
     {
-        animator.SetBool(AnimationConstants.IS_DEAD_PARAMETER, true);
+        animator.SetBool(EnemyConstants.IS_DEAD_PARAMETER, true);
         Destroy(gameObject);
         Destroy(enemyMovement);
         Destroy(enemyAttackZone);

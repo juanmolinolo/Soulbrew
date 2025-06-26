@@ -11,13 +11,28 @@ public class AttackZone : MonoBehaviour
     private Movement enemyMovement;
 
     [SerializeField]
-    private List<string> attackTriggerOptions;
+    private List<string> attackTriggers;
+
+    [SerializeField]
+    private List<float> attackDurations;
+
+    [SerializeField]
+    private float attackCooldown;
 
     [SerializeField]
     private Animator animator;
 
     private float lastAttackTime = 0f;
     private bool isPlayerInRange = false;
+
+    private void Start()
+    {
+        if (attackTriggers.Count != attackDurations.Count)
+        {
+            Debug.LogError("Attack triggers and durations lists must have the same length.");
+            return;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,7 +46,7 @@ public class AttackZone : MonoBehaviour
             }
             else
             {
-                Invoke(nameof(ResetAttackRange), EnemyConstants.ATTACK_DURATION);
+                Invoke(nameof(ResetAttackRange), GetRandomAttackDuration());
             }
         }
     }
@@ -51,27 +66,35 @@ public class AttackZone : MonoBehaviour
 
     private void StopMovement()
     {
-        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, false);
+        animator.SetBool(EnemyConstants.IS_MOVING_PARAMETER, false);
         enemyMovement.enabled = false;
     }
 
     private bool ShouldAttack()
     {
-        return Time.time - lastAttackTime > EnemyConstants.ATTACK_COOLDOWN;
+        return Time.time - lastAttackTime > attackCooldown;
     }
 
     private void Attack()
     {
-        animator.SetTrigger(GetRandomAttackTrigger());
+        KeyValuePair<string, float> attackTriggerDuration = GetRandomAttackTriggerDurationKeyValuePair();
+
+        animator.SetTrigger(attackTriggerDuration.Key);
         lastAttackTime = Time.time;
-        Invoke(nameof(DealDamageIfInRange), EnemyConstants.ATTACK_DURATION);
-        Invoke(nameof(ResetAttackRange), EnemyConstants.ATTACK_DURATION);
+        Invoke(nameof(DealDamageIfInRange), attackTriggerDuration.Value);
+        Invoke(nameof(ResetAttackRange), attackTriggerDuration.Value);
     }
 
-    private string GetRandomAttackTrigger()
+    private KeyValuePair<string, float> GetRandomAttackTriggerDurationKeyValuePair()
     {
-        int randomIndex = Random.Range(0, attackTriggerOptions.Count);
-        return attackTriggerOptions[randomIndex];
+        int randomIndex = Random.Range(0, attackTriggers.Count);
+        return new KeyValuePair<string, float>(attackTriggers[randomIndex], attackDurations[randomIndex]);
+    }
+
+    private float GetRandomAttackDuration()
+    {
+        int randomIndex = Random.Range(0, attackDurations.Count);
+        return attackDurations[randomIndex];
     }
 
     private void DealDamageIfInRange()
