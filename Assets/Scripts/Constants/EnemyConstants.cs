@@ -2,12 +2,6 @@
 {
     public static class EnemyConstants
     {
-        #region Velocity
-
-        public const float MOVEMENT_SPEED = 2.5f;
-
-        #endregion Velocity
-
         #region Distance
 
         public const float PATROL_MARGIN = 1f;
