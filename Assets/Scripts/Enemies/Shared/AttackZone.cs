@@ -11,45 +11,80 @@ public class AttackZone : MonoBehaviour
     private Movement enemyMovement;
 
     [SerializeField]
-    private List<AnimationClip> attackAnimationOptions;
+    private List<string> attackTriggerOptions;
 
-    private float lastAttackTime;
-    private bool isInAttackZone;
+    [SerializeField]
+    private Animator animator;
+
+    private float lastAttackTime = 0f;
+    private bool isPlayerInRange = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject == player && !enemyMovement.isPerformingMovementBlockingAction)
+        if (HasCollidedWithPlayer(collision.gameObject))
         {
-            if (Time.time - lastAttackTime > EnemyConstants.ATTACK_COOLDOWN)
+            StopMovement();
+            if (ShouldAttack())
             {
-                isInAttackZone = true;
-                enemyMovement.PerformMovementBlockingAction(EnemyConstants.ATTACK_DURATION, GetRandomAttackAnimationName());
-                Invoke(nameof(CheckPlayerInAttackRange), EnemyConstants.ATTACK_DURATION / 2);
-                lastAttackTime = Time.time;
+                isPlayerInRange = true;
+                Attack();
+            }
+            else
+            {
+                Invoke(nameof(ResetAttackRange), EnemyConstants.ATTACK_DURATION);
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject == player)
+        if (HasCollidedWithPlayer(collision.gameObject))
         {
-            isInAttackZone = false;
+            isPlayerInRange = false;
         }
     }
 
-    private string GetRandomAttackAnimationName()
+    private bool HasCollidedWithPlayer(GameObject gameObject)
     {
-        int randomIndex = Random.Range(0, attackAnimationOptions.Count);
-        return attackAnimationOptions[randomIndex].name;
+        return gameObject == player;
     }
 
-    private void CheckPlayerInAttackRange()
+    private void StopMovement()
     {
-        if (isInAttackZone)
+        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, false);
+        enemyMovement.enabled = false;
+    }
+
+    private bool ShouldAttack()
+    {
+        return Time.time - lastAttackTime > EnemyConstants.ATTACK_COOLDOWN;
+    }
+
+    private void Attack()
+    {
+        animator.SetTrigger(GetRandomAttackTrigger());
+        lastAttackTime = Time.time;
+        Invoke(nameof(DealDamageIfInRange), EnemyConstants.ATTACK_DURATION);
+        Invoke(nameof(ResetAttackRange), EnemyConstants.ATTACK_DURATION);
+    }
+
+    private string GetRandomAttackTrigger()
+    {
+        int randomIndex = Random.Range(0, attackTriggerOptions.Count);
+        return attackTriggerOptions[randomIndex];
+    }
+
+    private void DealDamageIfInRange()
+    {
+        if (isPlayerInRange)
         {
             player.GetComponent<HeroKnight>().TakeDamage();
         }
+    }
+
+    private void ResetAttackRange()
+    {
+        enemyMovement.enabled = true;
     }
 }
 

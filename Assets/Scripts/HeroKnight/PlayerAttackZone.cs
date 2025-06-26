@@ -11,7 +11,6 @@ namespace Assets.Scripts.HeroKnight
         {
             if (collision.gameObject.TryGetComponent<HitBox>(out var hitBox))
             {
-                Debug.Log("hitbox entered");
                 enemyHitBoxesOnAttackZone.Add(hitBox);
             }
         }
@@ -20,16 +19,15 @@ namespace Assets.Scripts.HeroKnight
         {
             if (collision.gameObject.TryGetComponent<HitBox>(out var hitBox))
             {
-                Debug.Log("hitbox left");
                 enemyHitBoxesOnAttackZone.Remove(hitBox);
             }
         }
 
         public void AttackEnemiesInRange()
         {
-            foreach (var hitBox in enemyHitBoxesOnAttackZone)
+            for (int i = 0; i < enemyHitBoxesOnAttackZone.Count; i++)
             {
-                hitBox.TakeDamage();
+                enemyHitBoxesOnAttackZone[i].TakeDamage();
             }
         }
     }

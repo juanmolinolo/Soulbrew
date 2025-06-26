@@ -2802,6 +2802,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMovement: {fileID: 1935666592}
+  enemyAttackZone: {fileID: 1079606123}
+  animator: {fileID: 1935666589}
 --- !u!1 &256856864
 GameObject:
   m_ObjectHideFlags: 0
@@ -11348,7 +11350,7 @@ Transform:
   m_GameObject: {fileID: 1079606120}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.175, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0.25, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11404,9 +11406,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1534764946}
   enemyMovement: {fileID: 1935666592}
-  attackAnimationOptions:
-  - {fileID: 7400000, guid: ddedfa16b45dca545840d70eb729b30c, type: 2}
-  - {fileID: 7400000, guid: 0ac2e8b9d25fda14090279c7d1825316, type: 2}
+  attackTriggerOptions:
+  - Attack1
+  - Attack2
+  animator: {fileID: 1935666589}
 --- !u!1 &1091469515
 GameObject:
   m_ObjectHideFlags: 0
@@ -19138,7 +19141,6 @@ MonoBehaviour:
   - {fileID: 1148147173}
   - {fileID: 53128754}
   player: {fileID: 1534764946}
-  isPerformingMovementBlockingAction: 0
 --- !u!50 &1935666593
 Rigidbody2D:
   serializedVersion: 5

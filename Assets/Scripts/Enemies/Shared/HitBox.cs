@@ -1,3 +1,4 @@
+using Assets.Scripts.Constants;
 using UnityEngine;
 
 public class HitBox : MonoBehaviour
@@ -5,30 +6,29 @@ public class HitBox : MonoBehaviour
     [SerializeField]
     private Movement enemyMovement;
 
+    [SerializeField]
+    private AttackZone enemyAttackZone;
+
+    [SerializeField]
+    private Animator animator;
+
     private int health = 2;
 
     public void TakeDamage()
     {
-        if (!enemyMovement.isPerformingMovementBlockingAction)
+        animator.SetTrigger(AnimationConstants.TAKE_HIT_TRIGGER);
+        health--;
+        if (health <= 0)
         {
-            enemyMovement.PerformMovementBlockingAction(1f, "TakeHit");
-            health--;
-            Debug.Log($"Enemy health: {health}");
-            if (health == 0)
-            {
-                Invoke(nameof(Die), 1f);
-            }
+            Die();
         }
     }
 
     private void Die()
     {
-        enemyMovement.PerformMovementBlockingAction(1f, "Die");
-        Invoke(nameof(DestroyObject), 1f);
-    }
-
-    private void DestroyObject()
-    {
-        Destroy(gameObject.GetComponentInParent<SpriteRenderer>());
+        animator.SetBool(AnimationConstants.IS_DEAD_PARAMETER, true);
+        Destroy(gameObject);
+        Destroy(enemyMovement);
+        Destroy(enemyAttackZone);
     }
 }

@@ -18,97 +18,40 @@ public class Movement : MonoBehaviour
 
     #endregion Parameters
 
-    public bool isPerformingMovementBlockingAction = false;
-    private bool shouldMove = true;
-    private bool isChasing = false;
-
+    private bool isWhithinChaseDistance = false;
     private int currentPatrolIndex = 0;
     private Vector2 targetPosition;
 
     private void Start()
     {
-        if (patrolPoints != null && patrolPoints.Count > 0)
-        {
-            targetPosition = patrolPoints[0].transform.position;
-        }
-        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, true);
+        SetFirstPatrolPointTarget();
     }
 
     void Update()
     {
-        if (!isPerformingMovementBlockingAction)
+        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, true);
+        if (isWhithinChaseDistance)
         {
-            if (shouldMove)
-            {
-                animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, true);
-                if (isChasing)
-                {
-                    Chase();
-                }
-                else
-                {
-                    Patrol();
-                }
-            }
-
-            isChasing = ShouldChase();
+            Chase();
         }
         else
         {
-            animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, false);
+            Patrol();
         }
-    }
 
-    public void PerformMovementBlockingAction(float actionDuration, string animationTrigger = null)
-    {
-        if (!isPerformingMovementBlockingAction)
-        {
-            isPerformingMovementBlockingAction = true;
-            if (animationTrigger != null)
-            {
-                animator.SetTrigger(animationTrigger);
-            }
-            Invoke(nameof(EndMovementBlockingAction), actionDuration);
-        }
-    }
-
-    private void EndMovementBlockingAction()
-    {
-        isPerformingMovementBlockingAction = false;
+        isWhithinChaseDistance = ShouldChase();
     }
 
     private void Chase()
     {
-        float distanceToPlayerX = Mathf.Abs(transform.position.x - player.transform.position.x);
-
-        if (distanceToPlayerX > 0.05f)
+        if (transform.position.x > player.transform.position.x)
         {
-            shouldMove = true;
-
-            if (transform.position.x > player.transform.position.x)
-            {
-                MoveEntity(Direction.Left);
-            }
-            else if (transform.position.x < player.transform.position.x)
-            {
-                MoveEntity(Direction.Right);
-            }
+            MoveEntity(Direction.Left);
         }
-        else
+        else if (transform.position.x < player.transform.position.x)
         {
-            if (shouldMove)
-            {
-                shouldMove = false;
-                animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, false);
-                Invoke(nameof(EndWalkingCoolDown), EnemyConstants.WALKING_COOLDOWN);
-            }
+            MoveEntity(Direction.Right);
         }
-    }
-
-    private void EndWalkingCoolDown()
-    {
-        shouldMove = true;
-        animator.SetBool(AnimationConstants.IS_MOVING_PARAMETER, true);
     }
 
     private void Patrol()
@@ -118,7 +61,7 @@ public class Movement : MonoBehaviour
 
         if (distanceToTarget < EnemyConstants.PATROL_MARGIN)
         {
-            CyclePatrol();
+            ChangePatrolPoint();
         }
 
         if (currentPosition.x < targetPosition.x)
@@ -137,7 +80,7 @@ public class Movement : MonoBehaviour
         return distanceToPlayer <= EnemyConstants.CHASE_DISTANCE;
     }
 
-    private void CyclePatrol()
+    private void ChangePatrolPoint()
     {
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
         targetPosition = patrolPoints[currentPatrolIndex].transform.position;
@@ -170,5 +113,13 @@ public class Movement : MonoBehaviour
     private void TurnAround()
     {
         transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+    }
+
+    private void SetFirstPatrolPointTarget()
+    {
+        if (patrolPoints != null && patrolPoints.Count > 0)
+        {
+            targetPosition = patrolPoints[0].transform.position;
+        }
     }
 }
