@@ -305,7 +305,7 @@ MonoBehaviour:
   obstacleCheckDistance: 1
   obstacleLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
 --- !u!1 &3652044962786948416
 GameObject:
   m_ObjectHideFlags: 0

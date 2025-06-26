@@ -163,6 +163,7 @@ public class Movement : MonoBehaviour
 
         return false;
     }
+
     private void ChangePatrolPoint()
     {
         currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
