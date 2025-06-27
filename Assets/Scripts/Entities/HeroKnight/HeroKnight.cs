@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.HeroKnight;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HeroKnight : MonoBehaviour
 {

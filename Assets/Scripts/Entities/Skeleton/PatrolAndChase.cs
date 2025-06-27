@@ -3,7 +3,7 @@ using Assets.Scripts.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour
+public class PatrolAndChase : MonoBehaviour
 {
     #region Parameters
 
@@ -38,6 +38,7 @@ public class Movement : MonoBehaviour
     private void Start()
     {
         SetFirstPatrolPointTarget();
+        VariateMovementSpeed();
     }
 
     void Update()
@@ -205,5 +206,11 @@ public class Movement : MonoBehaviour
         {
             targetPosition = patrolPoints[0].transform.position;
         }
+    }
+
+    private void VariateMovementSpeed()
+    {
+        float speedMultiplier = Random.Range(1f - EnemyConstants.SPEED_VARIATION_PERCENTAGE, 1f + EnemyConstants.SPEED_VARIATION_PERCENTAGE);
+        movementSpeed *= speedMultiplier;
     }
 }

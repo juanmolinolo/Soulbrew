@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackZone : MonoBehaviour
+public class SlashAttackZone : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
 
     [SerializeField]
-    private Movement enemyMovement;
+    private PatrolAndChase enemyMovement;
 
     [SerializeField]
     private List<string> attackTriggers;
@@ -24,15 +24,6 @@ public class AttackZone : MonoBehaviour
 
     private float lastAttackTime = 0f;
     private bool isPlayerInRange = false;
-
-    private void Start()
-    {
-        if (attackTriggers.Count != attackDurations.Count)
-        {
-            Debug.LogError("Attack triggers and durations lists must have the same length.");
-            return;
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

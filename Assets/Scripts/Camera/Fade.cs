@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Portal : MonoBehaviour
+public class Fade : MonoBehaviour
 {
     [SerializeField]
     private GameObject fadeImage;
@@ -20,11 +20,11 @@ public class Portal : MonoBehaviour
     {
         if (collision.CompareTag(TagConstants.PLAYER))
         {
-            Fade(collision.gameObject);
+            FadeCamera(collision.gameObject);
         }
     }
 
-    private void Fade(GameObject player)
+    private void FadeCamera(GameObject player)
     {
         StartCoroutine(FadeRoutine(player));
     }

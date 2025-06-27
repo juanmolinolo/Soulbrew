@@ -1,13 +1,14 @@
 using Assets.Scripts.Constants;
+using Assets.Scripts.Enemies.Shared;
 using UnityEngine;
 
-public class HitBox : MonoBehaviour
+public class HitBox : MonoBehaviour, IDamageableEnemy
 {
     [SerializeField]
-    private Movement enemyMovement;
+    private PatrolAndChase enemyMovement;
 
     [SerializeField]
-    private AttackZone enemyAttackZone;
+    private SlashAttackZone enemyAttackZone;
 
     [SerializeField]
     private Animator animator;
@@ -15,17 +16,20 @@ public class HitBox : MonoBehaviour
     [SerializeField]
     private int health;
 
-    public void TakeDamage(int amount)
+    [SerializeField]
+    private string takeHitTrigger;
+
+    public void TakeDamage(int damage)
     {
-        animator.SetTrigger(EnemyConstants.TAKE_HIT_TRIGGER);
-        health -= amount;
+        animator.SetTrigger(takeHitTrigger);
+        health -= damage;
         if (health <= 0)
         {
             Die();
         }
     }
 
-    private void Die()
+    public void Die()
     {
         animator.SetBool(EnemyConstants.IS_DEAD_PARAMETER, true);
         Destroy(gameObject);

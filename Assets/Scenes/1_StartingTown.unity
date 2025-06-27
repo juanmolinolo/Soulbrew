@@ -1758,6 +1758,17 @@ BoxCollider2D:
   m_AutoTiling: 1
   m_Size: {x: 0.16, y: 0.18}
   m_EdgeRadius: 0
+--- !u!114 &128548101 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2832073304549217461, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+  m_PrefabInstance: {fileID: 382018860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6b4f843b44142345ac0706f20478eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &162323994
 GameObject:
   m_ObjectHideFlags: 0
@@ -4398,6 +4409,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: attackZone
+      value: 
+      objectReference: {fileID: 128548101}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 940402935}
@@ -6045,7 +6060,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 610296452}
-  - component: {fileID: 610296453}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -6074,18 +6088,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &610296453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 610296451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37706a69383e3a344ab62a0d7f388929, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &622828298
 GameObject:
   m_ObjectHideFlags: 0

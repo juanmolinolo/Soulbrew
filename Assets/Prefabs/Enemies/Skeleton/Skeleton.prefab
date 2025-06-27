@@ -95,6 +95,7 @@ MonoBehaviour:
   enemyAttackZone: {fileID: 9015643184388819542}
   animator: {fileID: 1516081668626659844}
   health: 3
+  takeHitTrigger: TakeHit
 --- !u!1 &2678687531650555499
 GameObject:
   m_ObjectHideFlags: 0
