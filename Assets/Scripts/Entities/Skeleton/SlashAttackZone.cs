@@ -60,6 +60,14 @@ public class SlashAttackZone : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (HasCollidedWithPlayer(collision.gameObject))
+        {
+            isPlayerInRange = true;
+        }
+    }
+
     private bool HasCollidedWithPlayer(GameObject gameObject)
     {
         return gameObject == player;
