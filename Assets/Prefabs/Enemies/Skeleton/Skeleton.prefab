@@ -96,6 +96,7 @@ MonoBehaviour:
   animator: {fileID: 1516081668626659844}
   health: 3
   takeHitTrigger: TakeHit
+  takeHitDuration: 0.333
 --- !u!1 &2678687531650555499
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,3 +399,4 @@ MonoBehaviour:
   - 0.667
   attackCooldown: 2
   animator: {fileID: 1516081668626659844}
+  isTakingHit: 0

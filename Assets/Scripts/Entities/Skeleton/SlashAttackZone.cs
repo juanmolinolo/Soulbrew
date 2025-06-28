@@ -24,6 +24,16 @@ public class SlashAttackZone : MonoBehaviour
 
     private float lastAttackTime = 0f;
     private bool isPlayerInRange = false;
+    private bool isTakingAHit = false;
+
+    private void Update()
+    {
+        if (isPlayerInRange && ShouldAttack())
+        {
+            StopMovement();
+            Attack();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -63,7 +73,7 @@ public class SlashAttackZone : MonoBehaviour
 
     private bool ShouldAttack()
     {
-        return Time.time - lastAttackTime > attackCooldown;
+        return !isTakingAHit && (Time.time - lastAttackTime > attackCooldown);
     }
 
     private void Attack()
@@ -90,7 +100,7 @@ public class SlashAttackZone : MonoBehaviour
 
     private void DealDamageIfInRange()
     {
-        if (isPlayerInRange)
+        if (isPlayerInRange && !isTakingAHit)
         {
             player.GetComponent<HeroKnight>().TakeDamage();
         }
@@ -99,6 +109,11 @@ public class SlashAttackZone : MonoBehaviour
     private void ResetAttackRange()
     {
         enemyMovement.enabled = true;
+    }
+
+    public void SetTakingAHit(bool isTakingHit)
+    {
+        isTakingAHit = isTakingHit;
     }
 }
 

@@ -19,9 +19,12 @@ public class HitBox : MonoBehaviour, IDamageableEnemy
     [SerializeField]
     private string takeHitTrigger;
 
+    [SerializeField]
+    private float takeHitDuration;
+
     public void TakeDamage(int damage)
     {
-        animator.SetTrigger(takeHitTrigger);
+        TakeAHit();
         health -= damage;
         if (health <= 0)
         {
@@ -35,5 +38,17 @@ public class HitBox : MonoBehaviour, IDamageableEnemy
         Destroy(gameObject);
         Destroy(enemyMovement);
         Destroy(enemyAttackZone);
+    }
+
+    private void TakeAHit()
+    {
+        enemyAttackZone.SetTakingAHit(true);
+        animator.SetTrigger(takeHitTrigger);
+        Invoke(nameof(UnblockAttack), takeHitDuration);
+    }
+
+    private void UnblockAttack()
+    {
+        enemyAttackZone.SetTakingAHit(false);
     }
 }
