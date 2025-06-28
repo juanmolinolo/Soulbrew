@@ -2,13 +2,13 @@ using Assets.Scripts.Constants;
 using Assets.Scripts.Enemies.Shared;
 using UnityEngine;
 
-public class HitBox : MonoBehaviour, IDamageableEnemy
+public class ChaserHitBox : MonoBehaviour, IDamageableEnemy
 {
     [SerializeField]
-    private PatrolAndChase enemyMovement;
+    private ChaserMovement enemyMovement;
 
     [SerializeField]
-    private SlashAttackZone enemyAttackZone;
+    private ChaserAttackZone enemyAttackZone;
 
     [SerializeField]
     private Animator animator;

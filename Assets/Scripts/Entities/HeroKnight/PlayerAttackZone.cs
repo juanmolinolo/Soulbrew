@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Enemies.Shared;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttackZone : MonoBehaviour
 {
-    private readonly List<HitBox> enemyHitBoxesOnAttackZone = new();
+    private readonly List<IDamageableEnemy> enemyHitBoxesOnAttackZone = new();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<HitBox>(out var hitBox))
+        if (collision.gameObject.TryGetComponent<IDamageableEnemy>(out var hitBox))
         {
             enemyHitBoxesOnAttackZone.Add(hitBox);
         }
@@ -15,7 +16,7 @@ public class PlayerAttackZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<HitBox>(out var hitBox))
+        if (collision.gameObject.TryGetComponent<IDamageableEnemy>(out var hitBox))
         {
             enemyHitBoxesOnAttackZone.Remove(hitBox);
         }

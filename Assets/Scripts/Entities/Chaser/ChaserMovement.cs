@@ -3,7 +3,7 @@ using Assets.Scripts.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatrolAndChase : MonoBehaviour
+public class ChaserMovement : MonoBehaviour
 {
     #region Parameters
 

@@ -224,4 +224,10 @@ public class HeroKnight : MonoBehaviour
         m_animator.SetTrigger("Hurt");
         gameManager.TakeDamage(10);
     }
+
+    public void TakeDamage(int amount)
+    {
+        m_animator.SetTrigger("Hurt");
+        gameManager.TakeDamage(amount);
+    }
 }

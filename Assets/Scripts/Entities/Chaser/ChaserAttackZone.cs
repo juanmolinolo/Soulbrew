@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlashAttackZone : MonoBehaviour
+public class ChaserAttackZone : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
 
     [SerializeField]
-    private PatrolAndChase enemyMovement;
+    private ChaserMovement enemyMovement;
 
     [SerializeField]
     private List<string> attackTriggers;
