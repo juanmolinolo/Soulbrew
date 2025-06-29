@@ -1,3 +1,4 @@
+using Assets.Scripts.Enums;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -5,7 +6,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject pauseMenu;
+    private GameObject pause;
+
+    [SerializeField]
+    private GameObject ui;
 
     [SerializeField]
     private Image healthBar;
@@ -30,7 +34,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (pauseMenu.activeSelf)
+            if (pause.activeSelf)
             {
                 HidePauseMenu();
             }
@@ -41,25 +45,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ShowPauseMenu()
+    public void ShowPauseMenu()
     {
-        pauseMenu.SetActive(true);
+        pause.SetActive(true);
+        ui.SetActive(false);
         Time.timeScale = 0f;
     }
 
-    private void HidePauseMenu()
+    public void HidePauseMenu()
     {
-        pauseMenu.SetActive(false);
+        pause.SetActive(false);
+        ui.SetActive(true);
         Time.timeScale = 1f;
     }
 
-    public void LoadScene(int scene)
+    public void ReturnToMenu()
     {
-        SceneManager.LoadScene(scene);
-    }
-
-    public void CloseGame()
-    {
-        Application.Quit();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene((int)SceneBuildIndex.MainMenu);
     }
 }
