@@ -18,42 +18,36 @@ public class Fade : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag(TagConstants.PLAYER))
+        if (collision.gameObject.CompareTag(TagConstants.PLAYER))
         {
-            FadeCamera(collision.gameObject);
+            FadeCamera();
         }
     }
 
-    private void FadeCamera(GameObject player)
+    private void FadeCamera()
     {
-        StartCoroutine(FadeRoutine(player));
+        StartCoroutine(FadeRoutine());
     }
 
-    private IEnumerator FadeRoutine(GameObject player)
+    private IEnumerator FadeRoutine()
     {
         Image image = fadeImage.GetComponent<Image>();
-        SpriteRenderer spriteRenderer = player.GetComponent<SpriteRenderer>();
 
         float elapsedTime = 0f;
 
         Color imageColor = image.color;
-        Color playerColor = spriteRenderer.color;
 
         while (elapsedTime < fadeDuration)
         {
             elapsedTime += Time.deltaTime;
             imageColor.a = Mathf.Lerp(0f, 1f, elapsedTime / fadeDuration);
             image.color = imageColor;
-            playerColor.a = Mathf.Lerp(1f, 0f, elapsedTime / fadeDuration);
-            spriteRenderer.color = playerColor;
             yield return null;
         }
 
         imageColor.a = 1f;
         image.color = imageColor;
 
-        playerColor.a = 0f;
-        spriteRenderer.color = playerColor;
         SceneManager.LoadScene((int)sceneToLoad);
     }
 }

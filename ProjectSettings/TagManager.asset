@@ -41,14 +41,14 @@ TagManager:
   - name: Background
     uniqueID: 3050591463
     locked: 0
-  - name: UI
-    uniqueID: 3033099635
-    locked: 0
   - name: Structural
     uniqueID: 84713745
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 3731692243
     locked: 0
   m_RenderingLayers:
   - Default
