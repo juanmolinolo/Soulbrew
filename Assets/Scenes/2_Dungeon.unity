@@ -39017,6 +39017,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1534764946}
     - target: {fileID: 938510804804196289, guid: 53202782beb65f6478d89b38ae9770d0, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 938510804804196289, guid: 53202782beb65f6478d89b38ae9770d0, type: 3}
       propertyPath: stopDistance
       value: 1
       objectReference: {fileID: 0}

@@ -79,7 +79,6 @@ public class HeroKnight : MonoBehaviour
         {
             isBlocking = false;
             blockCurrentTime = 0.0f;
-            animator.SetBool("IdleBlock", false);
         }
 
         //Check if character just landed on the ground
@@ -162,7 +161,6 @@ public class HeroKnight : MonoBehaviour
         {
             isBlocking = true;
             animator.SetTrigger("Block");
-            animator.SetBool("IdleBlock", true);
         }
 
         // Roll
@@ -235,7 +233,6 @@ public class HeroKnight : MonoBehaviour
         {
             Debug.Log("Blocked!");
             animator.SetTrigger("BlockSuccess");
-            animator.SetBool("IdleBlock", true);
         }
         else
         {
