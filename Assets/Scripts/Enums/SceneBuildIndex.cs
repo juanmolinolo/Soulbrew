@@ -2,7 +2,8 @@
 {
     public enum SceneBuildIndex
     {
-        StartingTown = 0,
-        Castle = 1,
+        MainMenu = 0,
+        StartingTown = 1,
+        Castle = 2,
     }
 }
