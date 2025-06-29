@@ -33274,7 +33274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeImage: {fileID: 950241198}
   fadeDuration: 3
-  sceneToLoad: 1
+  sceneToLoad: 3
 --- !u!61 &1905223431
 BoxCollider2D:
   m_ObjectHideFlags: 0

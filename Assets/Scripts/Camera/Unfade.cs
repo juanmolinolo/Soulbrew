@@ -33,5 +33,6 @@ public class Unfade : MonoBehaviour
 
         imageColor.a = 0f;
         image.color = imageColor;
+        unfadeImage.SetActive(false);
     }
 }
