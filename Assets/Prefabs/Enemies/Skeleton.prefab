@@ -94,7 +94,7 @@ MonoBehaviour:
   enemyMovement: {fileID: 938510804804196289}
   enemyAttackZone: {fileID: 9015643184388819542}
   animator: {fileID: 1516081668626659844}
-  health: 3
+  health: 4
   takeHitTrigger: TakeHit
   takeHitDuration: 0.333
 --- !u!1 &2678687531650555499

@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a75863101d8f2a4297c862df3b75958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 2
   animator: {fileID: 5592102930864747605}
   spriteRenderer: {fileID: 1742065705869943578}
   deathAnimationTrigger: Die

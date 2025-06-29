@@ -11,11 +11,19 @@ public class HeroKnight : MonoBehaviour
     [SerializeField]
     private float rollForce = PlayerConstants.DEFAULT_ROLL_FORCE;
 
+    [SerializeField]
+    private float rollCooldown = 3f;
+
+    [SerializeField]
+    private float blockCooldown = 3f;
+
+    [SerializeField]
+    private float attackCooldown = 0.5f;
+
     public GameManager gameManager;
     public PlayerAttackZone attackZone;
 
     private Animator animator;
-    private Animator blockingAnimator;
     private Rigidbody2D rigibody;
     private SpriteRenderer spriteRenderer;
     private Sensor_HeroKnight groundSensor;
@@ -29,14 +37,21 @@ public class HeroKnight : MonoBehaviour
     private bool isGrounded = false;
     private bool isRolling = false;
     private bool isBlocking = false;
+
     private int facingDirection = 1;
     private int currentAttack = 0;
-    private float timeSinceLastAttack = 0.0f;
+
     private float delayToIdle = 0.0f;
+
     private readonly float rollDuration = 0.643f;
-    private readonly float blockDuration = 0.5f;
+    private readonly float blockDuration = 0.35f;
+
     private float rollCurrentTime;
     private float blockCurrentTime;
+
+    private float timeSinceLastRoll = 0.0f;
+    private float timeSinceLastBlock = 0.0f;
+    private float timeSinceLastAttack = 0.0f;
 
     private const KeyCode ROLL_KEY = KeyCode.LeftShift;
     private const KeyCode JUMP_KEY = KeyCode.Space;
@@ -59,6 +74,12 @@ public class HeroKnight : MonoBehaviour
     {
         // Increase timer that controls attack combo
         timeSinceLastAttack += Time.deltaTime;
+
+        // Increase timer that controls block cooldown
+        timeSinceLastBlock += Time.deltaTime;
+
+        // Increase timer that controls roll cooldown
+        timeSinceLastRoll += Time.deltaTime;
 
         // Increase timer that checks roll duration
         if (isRolling)
@@ -135,7 +156,7 @@ public class HeroKnight : MonoBehaviour
         animator.SetBool("WallSlide", isWallSliding);
 
         //Attack
-        if (Input.GetKeyDown(ATTACK_KEY) && timeSinceLastAttack > 0.25f && !isRolling)
+        if (Input.GetKeyDown(ATTACK_KEY) && timeSinceLastAttack > attackCooldown && !isRolling)
         {
             currentAttack++;
 
@@ -144,29 +165,29 @@ public class HeroKnight : MonoBehaviour
                 currentAttack = 1;
 
             // Reset Attack combo if time since last attack is too large
-            if (timeSinceLastAttack > 1.0f)
+            if (timeSinceLastAttack > attackCooldown * 2)
                 currentAttack = 1;
 
             // Call one of three attack animations "Attack1", "Attack2", "Attack3"
             animator.SetTrigger("Attack" + currentAttack);
 
-            // Reset timer
             timeSinceLastAttack = 0.0f;
-
             attackZone.AttackEnemiesInRange();
         }
 
         // Block
-        else if (Input.GetKeyDown(BLOCK_KEY) && !isRolling && !isWallSliding && !isBlocking)
+        else if (Input.GetKeyDown(BLOCK_KEY) && !isRolling && !isBlocking && timeSinceLastBlock > blockCooldown)
         {
             isBlocking = true;
+            timeSinceLastBlock = 0.0f;
             animator.SetTrigger("Block");
         }
 
         // Roll
-        else if (Input.GetKeyDown(ROLL_KEY) && !isRolling && !isWallSliding)
+        else if (Input.GetKeyDown(ROLL_KEY) && !isRolling && !isBlocking && timeSinceLastRoll > rollCooldown)
         {
             isRolling = true;
+            timeSinceLastRoll = 0.0f;
             animator.SetTrigger("Roll");
             rigibody.linearVelocity = new Vector2(facingDirection * rollForce, rigibody.linearVelocity.y);
         }
@@ -231,12 +252,7 @@ public class HeroKnight : MonoBehaviour
         }
         else if (isBlocking)
         {
-            Debug.Log("Blocked!");
             animator.SetTrigger("BlockSuccess");
-        }
-        else
-        {
-            Debug.Log("Cannot take damage while rolling.");
         }
     }
 
