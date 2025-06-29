@@ -398,4 +398,5 @@ MonoBehaviour:
   - 0.667
   - 0.667
   attackCooldown: 1
+  attackDamage: 5
   animator: {fileID: 4448834580365793329}

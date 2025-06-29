@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Constants;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ChaserAttackZone : MonoBehaviour
@@ -20,11 +19,20 @@ public class ChaserAttackZone : MonoBehaviour
     private float attackCooldown;
 
     [SerializeField]
+    private int attackDamage;
+
+    [SerializeField]
     private Animator animator;
 
     private float lastAttackTime = 0f;
     private bool isPlayerInRange = false;
     private bool isTakingAHit = false;
+    private HeroKnight heroKnight;
+
+    private void Start()
+    {
+        heroKnight = player.GetComponent<HeroKnight>();
+    }
 
     private void Update()
     {
@@ -110,7 +118,7 @@ public class ChaserAttackZone : MonoBehaviour
     {
         if (isPlayerInRange && !isTakingAHit)
         {
-            player.GetComponent<HeroKnight>().TakeDamage();
+            heroKnight.TakeDamage(attackDamage);
         }
     }
 

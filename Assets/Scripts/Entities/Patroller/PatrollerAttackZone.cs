@@ -3,16 +3,23 @@ using UnityEngine;
 public class PatrollerAttackZone : MonoBehaviour
 {
     [SerializeField]
-    private int damage;
+    private GameObject player;
 
     [SerializeField]
-    private GameObject player;
+    private int attackDamage;
+
+    private HeroKnight heroKnight;
+
+    private void Start()
+    {
+        heroKnight = player.GetComponent<HeroKnight>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (HasCollidedWithPlayer(collision))
         {
-            player.GetComponent<HeroKnight>().TakeDamage(damage);
+            heroKnight.TakeDamage(attackDamage);
         }
     }
 

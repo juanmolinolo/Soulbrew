@@ -1,25 +1,22 @@
-﻿namespace Assets.Scripts.Constants
+﻿public static class EnemyConstants
 {
-    public static class EnemyConstants
-    {
-        #region Distance
+    #region Distance
 
-        public const float PATROL_MARGIN = 1f;
-        public const float CHASE_DISTANCE = 5f;
+    public const float PATROL_MARGIN = 1f;
+    public const float CHASE_DISTANCE = 5f;
 
-        #endregion Distance
+    #endregion Distance
 
-        #region Speed
+    #region Speed
 
-        public const float SPEED_VARIATION_PERCENTAGE = 0.3f;
+    public const float SPEED_VARIATION_PERCENTAGE = 0.3f;
 
-        #endregion Speed
+    #endregion Speed
 
-        #region Animations
+    #region Animations
 
-        public const string IS_MOVING_PARAMETER = "IsMoving";
-        public const string IS_DEAD_PARAMETER = "IsDead";
+    public const string IS_MOVING_PARAMETER = "IsMoving";
+    public const string IS_DEAD_PARAMETER = "IsDead";
 
-        #endregion Animations
-    }
+    #endregion Animations
 }
