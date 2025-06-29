@@ -4549,6 +4549,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 1211278201}
+    - target: {fileID: 9043920546160527475, guid: a4b4a6d32bcb19248a754d6602ffc7e4, type: 3}
       propertyPath: attackZone
       value: 
       objectReference: {fileID: 128548101}
@@ -11913,8 +11917,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pause: {fileID: 1251516889}
   ui: {fileID: 720203180}
-  healthBar: {fileID: 1211278201}
-  healthAmount: 100
 --- !u!1 &945629303
 GameObject:
   m_ObjectHideFlags: 0

@@ -89,7 +89,7 @@ public class ChaserAttackZone : MonoBehaviour
 
     private bool ShouldAttack()
     {
-        return !isTakingAHit && (Time.time - lastAttackTime > attackCooldown);
+        return !isTakingAHit && (Time.time - lastAttackTime > attackCooldown) && !heroKnight.isDead;
     }
 
     private void Attack()

@@ -1,7 +1,6 @@
 using Assets.Scripts.Enums;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,27 +11,11 @@ public class GameManager : MonoBehaviour
     private GameObject ui;
 
     [SerializeField]
-    private Image healthBar;
-
-    [SerializeField]
-    private float healthAmount = 100f;
-
-    public void TakeDamage(float damage)
-    {
-        healthAmount -= damage;
-        healthBar.fillAmount = healthAmount / 100f;
-    }
-
-    public void Heal(float amount)
-    {
-        healthAmount += amount;
-        if (healthAmount > 100f) healthAmount = 100f;
-        healthBar.fillAmount = healthAmount / 100f;
-    }
+    private GameObject death;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && (death == null || !death.activeSelf))
         {
             if (pause.activeSelf)
             {
@@ -57,6 +40,17 @@ public class GameManager : MonoBehaviour
         pause.SetActive(false);
         ui.SetActive(true);
         Time.timeScale = 1f;
+    }
+
+    public void ShowDeathMenu()
+    {
+        death.SetActive(true);
+        ui.SetActive(false);
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ReturnToMenu()

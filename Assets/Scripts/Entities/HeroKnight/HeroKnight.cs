@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class HeroKnight : MonoBehaviour
 {
@@ -20,6 +21,12 @@ public class HeroKnight : MonoBehaviour
     [SerializeField]
     private float attackCooldown = 0.5f;
 
+    [SerializeField]
+    private int health = 100;
+
+    [SerializeField]
+    private Image healthBar;
+
     public GameManager gameManager;
     public PlayerAttackZone attackZone;
 
@@ -37,6 +44,7 @@ public class HeroKnight : MonoBehaviour
     private bool isGrounded = false;
     private bool isRolling = false;
     private bool isBlocking = false;
+    public bool isDead = false;
 
     private int facingDirection = 1;
     private int currentAttack = 0;
@@ -45,6 +53,7 @@ public class HeroKnight : MonoBehaviour
 
     private readonly float rollDuration = 0.643f;
     private readonly float blockDuration = 0.35f;
+    private readonly float deathDuration = 2.0f;
 
     private float rollCurrentTime;
     private float blockCurrentTime;
@@ -72,6 +81,8 @@ public class HeroKnight : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         // Increase timer that controls attack combo
         timeSinceLastAttack += Time.deltaTime;
 
@@ -247,8 +258,15 @@ public class HeroKnight : MonoBehaviour
     {
         if (CanTakeDamage())
         {
+            health -= amount;
             animator.SetTrigger("Hurt");
-            gameManager.TakeDamage(amount);
+            healthBar.fillAmount = health / 100f;
+            if (health <= 0)
+            {
+                animator.SetTrigger("Death");
+                isDead = true;
+                Invoke(nameof(ShowDeathMenu), deathDuration);
+            }
         }
         else if (isBlocking)
         {
@@ -256,8 +274,13 @@ public class HeroKnight : MonoBehaviour
         }
     }
 
+    private void ShowDeathMenu()
+    {
+        gameManager.ShowDeathMenu();
+    }
+
     private bool CanTakeDamage()
     {
-        return !isRolling && !isBlocking;
+        return !isRolling && !isBlocking && !isDead;
     }
 }
