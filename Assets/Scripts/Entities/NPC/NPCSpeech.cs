@@ -44,11 +44,6 @@ public class NPCSpeech : MonoBehaviour
                 tooltip.SetActive(false);
                 speechBubble.SetActive(true);
             }
-            if (Input.GetKeyDown(KeyCode.R) && isSpeechVisible)
-            {
-                isSpeechVisible = false;
-                speechBubble.SetActive(false);
-            }
         }
         else
         {

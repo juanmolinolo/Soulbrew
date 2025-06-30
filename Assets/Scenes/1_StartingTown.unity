@@ -30498,7 +30498,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'The castle has fallen!
 
-    Please help us fight back!'
+    Please help us take it back!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ef6193bb15fa93a42a4af22a8cc0dc63, type: 2}
   m_sharedMaterial: {fileID: -885736957034435947, guid: ef6193bb15fa93a42a4af22a8cc0dc63, type: 2}
