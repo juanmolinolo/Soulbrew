@@ -216,13 +216,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f5034bc83802944c9bca57c55e08978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 4
-  m_jumpForce: 7.5
-  m_rollForce: 6
-  m_noBlood: 0
-  m_slideDust: {fileID: 1038168246061390451, guid: 8b8c8cc6774fb074cb9139cc631b108e, type: 3}
+  movementSpeed: 4
+  jumpForce: 7.5
+  rollForce: 6
+  rollCooldown: 3
+  blockCooldown: 3
+  attackCooldown: 0.5
+  health: 100
+  healthBar: {fileID: 0}
+  attackSound: {fileID: 8300000, guid: 521bd20920501fc4a976fdc7290737db, type: 3}
+  rollSound: {fileID: 8300000, guid: 93a47f1f84071ae4c984384c9f0acad5, type: 3}
+  jumpSound: {fileID: 8300000, guid: 98f1f37ea1efc8c488e0cb49188ec34a, type: 3}
+  dieSound: {fileID: 8300000, guid: 218cd924e811c324a8e70705c5843aaf, type: 3}
+  hurtSound: {fileID: 8300000, guid: 3977459a4729e7d47a214ec05959303b, type: 3}
+  walkSound: {fileID: 8300000, guid: 98a6ecca4ca0fce4cafc68f9ec8700e9, type: 3}
+  blockSound: {fileID: 8300000, guid: 4335a25906f7aeb40b0dcc36ec2d5744, type: 3}
   gameManager: {fileID: 0}
-  attackZone: {fileID: 0}
+  attackZone: {fileID: 2832073304549217461}
+  slideDust: {fileID: 0}
+  isDead: 0
 --- !u!95 &2655505060201611074
 Animator:
   serializedVersion: 7

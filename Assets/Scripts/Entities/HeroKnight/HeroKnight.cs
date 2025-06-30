@@ -27,12 +27,34 @@ public class HeroKnight : MonoBehaviour
     [SerializeField]
     private Image healthBar;
 
+    [SerializeField]
+    private AudioClip attackSound;
+
+    [SerializeField]
+    private AudioClip rollSound;
+
+    [SerializeField]
+    private AudioClip jumpSound;
+
+    [SerializeField]
+    private AudioClip dieSound;
+
+    [SerializeField]
+    private AudioClip hurtSound;
+
+    [SerializeField]
+    private AudioClip walkSound;
+
+    [SerializeField]
+    private AudioClip blockSound;
+
     public GameManager gameManager;
     public PlayerAttackZone attackZone;
 
     private Animator animator;
     private Rigidbody2D rigibody;
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
     private Sensor_HeroKnight groundSensor;
     private Sensor_HeroKnight wallSensorR1;
     private Sensor_HeroKnight wallSensorR2;
@@ -54,6 +76,7 @@ public class HeroKnight : MonoBehaviour
     private readonly float rollDuration = 0.643f;
     private readonly float blockDuration = 0.35f;
     private readonly float deathDuration = 2.0f;
+    private readonly float stepDuration = 0.305f;
 
     private float rollCurrentTime;
     private float blockCurrentTime;
@@ -61,6 +84,7 @@ public class HeroKnight : MonoBehaviour
     private float timeSinceLastRoll = 0.0f;
     private float timeSinceLastBlock = 0.0f;
     private float timeSinceLastAttack = 0.0f;
+    private float timeSinceLastStep = 0f;
 
     private const KeyCode ROLL_KEY = KeyCode.LeftShift;
     private const KeyCode JUMP_KEY = KeyCode.Space;
@@ -71,6 +95,7 @@ public class HeroKnight : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rigibody = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         groundSensor = transform.Find(PlayerConstants.GROUND_SENSOR_NAME).GetComponent<Sensor_HeroKnight>();
         wallSensorR1 = transform.Find(PlayerConstants.R1_SENSOR_NAME).GetComponent<Sensor_HeroKnight>();
@@ -82,6 +107,9 @@ public class HeroKnight : MonoBehaviour
     void Update()
     {
         if (isDead) return;
+
+        // Update walk step timer
+        timeSinceLastStep += Time.deltaTime;
 
         // Increase timer that controls attack combo
         timeSinceLastAttack += Time.deltaTime;
@@ -135,6 +163,11 @@ public class HeroKnight : MonoBehaviour
         {
             spriteRenderer.flipX = false;
             facingDirection = 1;
+            if (timeSinceLastStep >= stepDuration && isGrounded && !isRolling && !isBlocking)
+            {
+                audioSource.PlayOneShot(walkSound);
+                timeSinceLastStep = 0f;
+            }
 
             // Flip AttackZone
             if (attackZone.transform.localPosition.x < 0)
@@ -146,6 +179,11 @@ public class HeroKnight : MonoBehaviour
         {
             spriteRenderer.flipX = true;
             facingDirection = -1;
+            if (timeSinceLastStep >= stepDuration && isGrounded && !isRolling && !isBlocking)
+            {
+                audioSource.PlayOneShot(walkSound);
+                timeSinceLastStep = 0f;
+            }
 
             // Flip AttackZone
             if (attackZone.transform.localPosition.x > 0)
@@ -181,6 +219,7 @@ public class HeroKnight : MonoBehaviour
 
             // Call one of three attack animations "Attack1", "Attack2", "Attack3"
             animator.SetTrigger("Attack" + currentAttack);
+            audioSource.PlayOneShot(attackSound);
 
             timeSinceLastAttack = 0.0f;
             attackZone.AttackEnemiesInRange();
@@ -200,6 +239,7 @@ public class HeroKnight : MonoBehaviour
             isRolling = true;
             timeSinceLastRoll = 0.0f;
             animator.SetTrigger("Roll");
+            audioSource.PlayOneShot(rollSound);
             rigibody.linearVelocity = new Vector2(facingDirection * rollForce, rigibody.linearVelocity.y);
         }
 
@@ -207,6 +247,7 @@ public class HeroKnight : MonoBehaviour
         else if (Input.GetKeyDown(JUMP_KEY) && isGrounded && !isRolling)
         {
             animator.SetTrigger("Jump");
+            audioSource.PlayOneShot(jumpSound);
             isGrounded = false;
             animator.SetBool("Grounded", isGrounded);
             rigibody.linearVelocity = new Vector2(rigibody.linearVelocity.x, jumpForce);
@@ -264,13 +305,19 @@ public class HeroKnight : MonoBehaviour
             if (health <= 0)
             {
                 animator.SetTrigger("Death");
+                audioSource.PlayOneShot(dieSound);
                 isDead = true;
                 Invoke(nameof(ShowDeathMenu), deathDuration);
+            }
+            else
+            {
+                audioSource.PlayOneShot(hurtSound);
             }
         }
         else if (isBlocking)
         {
             animator.SetTrigger("BlockSuccess");
+            audioSource.PlayOneShot(blockSound);
         }
     }
 
