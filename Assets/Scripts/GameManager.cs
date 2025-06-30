@@ -58,4 +58,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene((int)SceneBuildIndex.MainMenu);
     }
+
+    public void ToggleMute()
+    {
+        AudioListener.volume = AudioListener.volume == 0 ? 1 : 0;
+    }
 }

@@ -24,6 +24,12 @@ public class ChaserAttackZone : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip attackSound;
+
     private float lastAttackTime = 0f;
     private bool isPlayerInRange = false;
     private bool isTakingAHit = false;
@@ -98,6 +104,7 @@ public class ChaserAttackZone : MonoBehaviour
 
         animator.SetTrigger(attackTriggerDuration.Key);
         lastAttackTime = Time.time;
+        audioSource.PlayOneShot(attackSound);
         Invoke(nameof(DealDamageIfInRange), attackTriggerDuration.Value);
         Invoke(nameof(ResetAttackRange), attackTriggerDuration.Value);
     }

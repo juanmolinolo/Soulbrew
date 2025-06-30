@@ -11,7 +11,11 @@ public class EndManager : MonoBehaviour
 
     public void Restart()
     {
-        Debug.Log("Restarting the game...");
         SceneManager.LoadScene((int)SceneBuildIndex.MainMenu);
+    }
+
+    public void ToggleMute()
+    {
+        AudioListener.volume = AudioListener.volume == 0 ? 1 : 0;
     }
 }

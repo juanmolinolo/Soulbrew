@@ -21,13 +21,27 @@ public class ChaserHitBox : MonoBehaviour, IDamageableEnemy
     [SerializeField]
     private float takeHitDuration;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip hurtSound;
+
+    [SerializeField]
+    private AudioClip deathSound;
+
     public void TakeDamage(int damage)
     {
         TakeAHit();
         health -= damage;
         if (health <= 0)
         {
+            audioSource.PlayOneShot(deathSound);
             Die();
+        }
+        else
+        {
+            audioSource.PlayOneShot(hurtSound);
         }
     }
 

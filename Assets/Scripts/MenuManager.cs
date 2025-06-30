@@ -13,9 +13,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private GameObject tutorial;
 
-    [SerializeField]
-    private GameObject settings;
-
     public void Play()
     {
         SceneManager.LoadScene((int)SceneBuildIndex.StartingTown);
@@ -38,11 +35,6 @@ public class MenuManager : MonoBehaviour
             tutorial.SetActive(false);
             menu.SetActive(true);
         }
-        else if (settings.activeSelf)
-        {
-            settings.SetActive(false);
-            menu.SetActive(true);
-        }
     }
 
     public void ShowCredits()
@@ -57,9 +49,8 @@ public class MenuManager : MonoBehaviour
         tutorial.SetActive(true);
     }
 
-    public void ShowSettings()
+    public void ToggleMute()
     {
-        menu.SetActive(false);
-        settings.SetActive(true);
+        AudioListener.volume = AudioListener.volume == 0 ? 1 : 0;
     }
 }

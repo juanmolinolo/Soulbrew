@@ -24,6 +24,15 @@ public class PatrollerHitBox : MonoBehaviour, IDamageableEnemy
     [SerializeField]
     private PatrollerMovement enemyMovement;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip deathSound;
+
+    [SerializeField]
+    private AudioClip hitSound;
+
     private Color originalColor;
 
     private void Start()
@@ -37,7 +46,12 @@ public class PatrollerHitBox : MonoBehaviour, IDamageableEnemy
         health -= damage;
         if (health <= 0)
         {
+            audioSource.PlayOneShot(deathSound);
             Die();
+        }
+        else
+        {
+            audioSource.PlayOneShot(hitSound);
         }
     }
 
